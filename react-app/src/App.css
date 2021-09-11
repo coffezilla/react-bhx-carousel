@@ -4,6 +4,7 @@ body {
 }
 
 .grid-item--example img {
+	width: 100%;
 	/* display: block;
 	padding: 0px;
 	margin: 0;

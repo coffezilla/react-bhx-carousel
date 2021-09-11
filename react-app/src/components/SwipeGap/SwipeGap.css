@@ -2,9 +2,9 @@
 
 /******************** VARIABLES *********************/
 .grid-swipe {
-	--margin-number: 0px;
+	--margin-number: 10px;
 	--gap-number: 0px;
-	--column-number: 2;
+	--column-number: 1;
 	--column-percentage-column: calc(calc(100 / var(--column-number)) / 100);
 	--column-size: calc(100% * var(--column-percentage-column));
 }
@@ -25,6 +25,9 @@
 .grid-swipe:after {
 	content: '';
 	display: block;
+}
+.grid-swipe--snap.grid-swipe:before,
+.grid-swipe--snap.grid-swipe:after {
 	scroll-snap-align: end;
 	-webkit-scroll-snap-align: end;
 }
@@ -32,21 +35,36 @@
 /******************** GRID ITEM *********************/
 .grid-item {
 	border: none;
-	scroll-snap-align: start;
-	-webkit-scroll-snap-align: start;
-	scroll-snap-stop: always;
-	-webkit-scroll-snap-stop: always;
 	overflow: hidden;
 }
+.grid-swipe--snap .grid-item {
+	scroll-snap-stop: always;
+	-webkit-scroll-snap-stop: always;
+	scroll-snap-align: start;
+	-webkit-scroll-snap-align: start;
+}
+
+.grid-swipe--snap.grid-swipe--snap--center .grid-item {
+	scroll-snap-align: center;
+	-webkit-scroll-snap-align: center;
+}
+.grid-swipe--snap.grid-swipe--snap--end .grid-item {
+	scroll-snap-align: end;
+	-webkit-scroll-snap-align: end;
+}
+
 .grid-item:last-child {
 	margin-right: 0px !important;
 }
 
-/******************** GAP CUSTOM *********************/
-.grid-swipe--gap.grid-swipe--default {
+/******************** GAP CUSTOM - size *********************/
+.grid-swipe--default.grid-swipe--snap--end {
+	scroll-padding-right: var(--margin-number); /* padding correcao ios safari */
+}
+.grid-swipe--default {
 	scroll-padding-left: var(--margin-number); /* padding correcao ios safari */
 }
-.grid-swipe--gap.grid-swipe--default .grid-item {
+.grid-swipe--default .grid-item {
 	margin-right: var(--gap-number);
 	flex: 0 0
 		calc(
@@ -58,9 +76,15 @@
 		);
 }
 
-.grid-swipe--gap.grid-swipe--default:before,
-.grid-swipe--gap.grid-swipe--default:after {
+.grid-swipe--default:before,
+.grid-swipe--default:after {
 	flex: 0 0 var(--margin-number);
+}
+
+/******************** GAP CUSTOM - size *********************/
+.grid-swipe--large .grid-item {
+	overflow: initial;
+	flex: initial !important;
 }
 
 /* HACK: Hide scrollbar for Chrome, Safari and Opera */

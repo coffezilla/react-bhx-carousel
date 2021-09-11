@@ -2,7 +2,6 @@ import './SwipeGap.css';
 
 interface IPropsGap {
 	children: any;
-	fullscreen?: boolean;
 	column?: number;
 	gap?: number;
 	responsiveLimit?: number;
@@ -16,7 +15,6 @@ interface IPropsItem {
 
 const SwipeGap = ({
 	children,
-	fullscreen = false,
 	column = 2,
 	gap = 10,
 	responsiveLimit = 700,
@@ -25,13 +23,11 @@ const SwipeGap = ({
 	console.log(responsiveLimit, gap);
 	return (
 		<div
-			className={`${fullscreen ? 'grid-swipe--full' : 'grid-swipe--gap'}  ${
-				customClass && customClass
-			} grid-col-${column}
+			className={`${customClass && customClass} grid-col-${column}
       grid-swipe
-      grid-swipe--gap-1
-      grid-swipe--margin-1
       grid-swipe--default
+      grid-swipe--snap
+
 `}
 		>
 			{children}
