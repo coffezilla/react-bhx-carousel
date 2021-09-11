@@ -1,14 +1,70 @@
-/* @media only screen and (max-width: 700px) { */
-
 /******************** VARIABLES *********************/
 .grid-swipe {
-	--margin-number: 10px;
+	--margin-number: 0px;
 	--gap-number: 0px;
 	--column-number: 1;
 	--column-percentage-column: calc(calc(100 / var(--column-number)) / 100);
 	--column-size: calc(100% * var(--column-percentage-column));
 }
+/* custom margin  */
+.grid-swipe-custom__margin--5 {
+	--margin-number: 5px;
+}
+.grid-swipe-custom__margin--10 {
+	--margin-number: 10px;
+}
+.grid-swipe-custom__margin--15 {
+	--margin-number: 15px;
+}
+.grid-swipe-custom__margin--20 {
+	--margin-number: 20px;
+}
+.grid-swipe-custom__margin--25 {
+	--margin-number: 25px;
+}
+.grid-swipe-custom__margin--30 {
+	--margin-number: 30px;
+}
 
+/* custom gap */
+.grid-swipe-custom__gap--5 {
+	--gap-number: 5px;
+}
+.grid-swipe-custom__gap--10 {
+	--gap-number: 10px;
+}
+.grid-swipe-custom__gap--15 {
+	--gap-number: 15px;
+}
+.grid-swipe-custom__gap--20 {
+	--gap-number: 20px;
+}
+.grid-swipe-custom__gap--25 {
+	--gap-number: 25px;
+}
+.grid-swipe-custom__gap--30 {
+	--gap-number: 30px;
+}
+
+/* custom column  */
+.grid-swipe-custom__column--1 {
+	--column-number: 1;
+}
+.grid-swipe-custom__column--2 {
+	--column-number: 2;
+}
+.grid-swipe-custom__column--3 {
+	--column-number: 3;
+}
+.grid-swipe-custom__column--4 {
+	--column-number: 4;
+}
+.grid-swipe-custom__column--5 {
+	--column-number: 5;
+}
+.grid-swipe-custom__column--6 {
+	--column-number: 6;
+}
 /******************** GRID SWIPE *********************/
 .grid-swipe {
 	align-content: center;
@@ -82,7 +138,7 @@
 }
 
 /******************** GAP CUSTOM - size *********************/
-.grid-swipe--large .grid-item {
+.grid-swipe--fluid .grid-item {
 	overflow: initial;
 	flex: initial !important;
 }
