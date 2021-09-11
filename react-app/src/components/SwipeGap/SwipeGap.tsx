@@ -17,7 +17,7 @@ interface IPropsItem {
 const SwipeGap = ({
 	children,
 	fullscreen = false,
-	column = 1,
+	column = 2,
 	gap = 10,
 	responsiveLimit = 700,
 	customClass,
@@ -31,7 +31,8 @@ const SwipeGap = ({
       grid-swipe
       grid-swipe--gap-1
       grid-swipe--margin-1
-      grid-swipe-gap-1`}
+      grid-swipe--default
+`}
 		>
 			{children}
 		</div>
