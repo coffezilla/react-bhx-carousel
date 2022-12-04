@@ -159,6 +159,13 @@
 	height: 7px;
 	display: block;
 	border-radius: 100%;
-	background-color: #989898;
 	margin: 0.6rem 0.2rem;
+}
+
+.grid-swipe--dots--item__active {
+	background-color: black;
+}
+
+.grid-swipe--dots--item__idle {
+	background-color: #00000033;
 }

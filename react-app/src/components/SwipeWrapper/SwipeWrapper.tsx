@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './SwipeWrapper.css';
 
 interface IPropsWrapper {
@@ -12,7 +12,8 @@ interface IPropsWrapper {
 	snap?: boolean;
 	fluid?: boolean;
 	snapDirection?: 'start' | 'center' | 'end';
-	dots?: boolean;
+	hasDots?: boolean;
+	id?: string;
 }
 
 interface IPropsItem {
@@ -29,19 +30,37 @@ export const SwipeWrapper = ({
 	fluid = false,
 	responsiveLimit = 700,
 	customClass,
-	dots = false,
+	hasDots = false,
+	id,
 	snapDirection = 'start',
 }: IPropsWrapper) => {
 	const [currentItem, setCurrentItem] = useState<number>(1); // current item swiped
+	const [foo, setFoo] = useState<number>(1); // current item swiped
 	const [width, setWidth] = useState<number>(window.innerWidth); // check width size of the window
-	const totalChilds = children.length; // total childrens
+	const totalChildren = children.length; // total childrens
+	const refCarousel = useRef<any>();
 
 	const handleWindowSizeChange = () => {
 		setWidth(window.innerWidth);
 	};
 
+	const handleScrollSwipe = () => {
+		if (hasDots) {
+			// setFoo(refCarousel.current.scrollLeft.toFixed());
+
+			for (let i = 0; i < totalChildren; i++) {
+				if (
+					refCarousel.current.scrollLeft >= ((width - (margin * 2 - gap)) * i) / column - 1 &&
+					refCarousel.current.scrollLeft <= ((width - (margin * 2 - gap)) * i) / column + 1
+				) {
+					setCurrentItem(() => i + 1);
+				}
+			}
+		}
+	};
+
 	useEffect(() => {
-		console.log(dots);
+		// console.log(dots);
 		handleWindowSizeChange();
 		window.addEventListener('resize', handleWindowSizeChange);
 		return () => {
@@ -52,7 +71,10 @@ export const SwipeWrapper = ({
 	return width < responsiveLimit ? (
 		<>
 			<div
-				className={`${customClass && customClass} 
+				ref={refCarousel}
+				onScroll={handleScrollSwipe}
+				id={id}
+				className={`${customClass && customClass}
         grid-swipe
         grid-swipe--default
         grid-swipe-custom__column--${column}
@@ -64,9 +86,13 @@ export const SwipeWrapper = ({
 			>
 				{children}
 			</div>
-			<div>
-				<SwipeDots totalChilds={totalChilds} />
-			</div>
+			{hasDots && (
+				<SwipeDots totalChildren={totalChildren} column={column} currentItem={currentItem} />
+			)}
+
+			{/* <div>{currentItem}</div>
+			<div>{width}</div>
+			<div>{foo}</div> */}
 		</>
 	) : (
 		<div>{children}</div>
@@ -77,12 +103,29 @@ export const SwipeItem = ({ children, customClass }: IPropsItem) => {
 	return <div className={`grid-item  ${customClass && customClass}`}>{children}</div>;
 };
 
-export const SwipeDots = ({ totalChilds }: { totalChilds: number }) => {
-	// const totalChilds
-	// let allDots = totalChilds;
+// not fluid
+// not centered
+// only mobile
+export const SwipeDots = ({
+	totalChildren,
+	column,
+	currentItem,
+}: {
+	totalChildren: number;
+	column: number;
+	currentItem: number;
+}) => {
+	// const totalChildren
+	const totalDots = totalChildren - (column - 1);
 	let htmlDots = [];
-	for (let i = 0; i < totalChilds; i++) {
-		htmlDots.push(<div className="grid-swipe--dots--item"></div>);
+	for (let i = 0; i < totalDots; i++) {
+		htmlDots.push(
+			<div
+				className={`grid-swipe--dots--item ${
+					i === currentItem - 1 ? 'grid-swipe--dots--item__active' : 'grid-swipe--dots--item__idle'
+				}`}
+			></div>,
+		);
 	}
 
 	return (
