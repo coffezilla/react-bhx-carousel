@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useState } from 'react';
 import './SwipeWrapper.css';
 
@@ -11,6 +12,7 @@ interface IPropsWrapper {
 	snap?: boolean;
 	fluid?: boolean;
 	snapDirection?: 'start' | 'center' | 'end';
+	dots?: boolean;
 }
 
 interface IPropsItem {
@@ -27,15 +29,19 @@ export const SwipeWrapper = ({
 	fluid = false,
 	responsiveLimit = 700,
 	customClass,
+	dots = false,
 	snapDirection = 'start',
 }: IPropsWrapper) => {
+	const [currentItem, setCurrentItem] = useState<number>(1); // current item swiped
 	const [width, setWidth] = useState<number>(window.innerWidth); // check width size of the window
+	const totalChilds = children.length; // total childrens
 
 	const handleWindowSizeChange = () => {
 		setWidth(window.innerWidth);
 	};
 
 	useEffect(() => {
+		console.log(dots);
 		handleWindowSizeChange();
 		window.addEventListener('resize', handleWindowSizeChange);
 		return () => {
@@ -44,8 +50,9 @@ export const SwipeWrapper = ({
 	}, []);
 
 	return width < responsiveLimit ? (
-		<div
-			className={`${customClass && customClass} 
+		<>
+			<div
+				className={`${customClass && customClass} 
         grid-swipe
         grid-swipe--default
         grid-swipe-custom__column--${column}
@@ -54,9 +61,13 @@ export const SwipeWrapper = ({
         grid-swipe--snap--${snapDirection}
         ${snap && 'grid-swipe--snap'}
         ${fluid && 'grid-swipe--fluid'}`}
-		>
-			{children}
-		</div>
+			>
+				{children}
+			</div>
+			<div>
+				<SwipeDots totalChilds={totalChilds} />
+			</div>
+		</>
 	) : (
 		<div>{children}</div>
 	);
@@ -64,4 +75,21 @@ export const SwipeWrapper = ({
 
 export const SwipeItem = ({ children, customClass }: IPropsItem) => {
 	return <div className={`grid-item  ${customClass && customClass}`}>{children}</div>;
+};
+
+export const SwipeDots = ({ totalChilds }: { totalChilds: number }) => {
+	// const totalChilds
+	// let allDots = totalChilds;
+	let htmlDots = [];
+	for (let i = 0; i < totalChilds; i++) {
+		htmlDots.push(<div className="grid-swipe--dots--item"></div>);
+	}
+
+	return (
+		<div className="grid-swipe--dots">
+			{htmlDots.map((item) => {
+				return item;
+			})}
+		</div>
+	);
 };

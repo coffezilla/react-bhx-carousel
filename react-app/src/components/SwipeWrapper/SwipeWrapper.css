@@ -147,3 +147,18 @@
 ::-webkit-scrollbar {
 	display: none;
 }
+
+/******************** DOTS *********************/
+.grid-swipe--dots {
+	display: flex;
+	justify-content: center;
+}
+
+.grid-swipe--dots--item {
+	width: 7px;
+	height: 7px;
+	display: block;
+	border-radius: 100%;
+	background-color: #989898;
+	margin: 0.6rem 0.2rem;
+}
